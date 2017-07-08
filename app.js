@@ -8,7 +8,8 @@ const layouts      = require('express-ejs-layouts');
 const mongoose     = require('mongoose');
 
 
-mongoose.connect('mongodb://localhost/stem-cell-api');
+// database connection
+require('./configs/database');
 
 const app = express();
 
