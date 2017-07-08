@@ -2,7 +2,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const dbName = 'stem-cell-db';
+require('dotenv').config();
 
 //******************************************************
 // set DB connection string to use the value we have 
@@ -15,7 +15,7 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {  
-  console.log(`Connected to the ${dbName} database`);
+  console.log(`Connected to the ${process.env.MONGODB_URI} database`);
 });
 
 
