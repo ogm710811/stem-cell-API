@@ -3,6 +3,7 @@
 
 const mongoose = require('mongoose');
 require('dotenv').config();
+mongoose.Promise = global.Promise;
 
 //******************************************************
 // set DB connection string to use the value we have 
