@@ -4,10 +4,13 @@ const Schema       = mongoose.Schema;
 const countrySchema = new Schema({
     code: {
         type : String,
+        uppercase : true,
+        required  : [ true, 'Please, enter a country code' ]
         // use ISO country code
     },
     name: {
         type : String,
+        required  : [ true, 'Please, enter a country code' ]
         // the name of the country
     },    
 },

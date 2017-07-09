@@ -69,6 +69,9 @@ app.use('/api.stem', authRoutes);
 const countryRoutes = require('./routes/country-routes');
 app.use('/api.stem', countryRoutes);
 
+const medicalUnitRoutes = require('./routes/medical-unit-routes');
+app.use('/api.stem', medicalUnitRoutes);
+
 app.use((req, res, next) => {
   res.sendfile(__dirname + './public/index.html');
 });

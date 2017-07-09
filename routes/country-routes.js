@@ -16,9 +16,9 @@ const countryRoutes = express.Router();
 
     We will define this API:
     METHOD      URL             DESCRIPTION
-    POST	    /countries  	Add new country
-    GET 	    /countries	    Returns all countries
-    GET 	    /countries/:id  Returns country with id
+    POST	      /countries  	  Add new country
+    GET 	      /countries	    Returns all countries
+    GET 	      /countries/:id  Returns country with id
     PUT         /countries/:id  Edits country with id
     DELETE      /countries/:id  Deletes country with id
 */
