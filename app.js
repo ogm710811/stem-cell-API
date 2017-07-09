@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const layouts      = require('express-ejs-layouts');
 const mongoose     = require('mongoose');
+const ensure       = require('connect-ensure-login');
 
 
 const session      = require('express-session');
@@ -64,6 +65,9 @@ app.use('/', index);
 
 const authRoutes = require('./routes/auth-routes');
 app.use('/api.stem', authRoutes);
+
+const countryRoutes = require('./routes/country-routes');
+app.use('/api.stem', countryRoutes);
 
 app.use((req, res, next) => {
   res.sendfile(__dirname + './public/index.html');

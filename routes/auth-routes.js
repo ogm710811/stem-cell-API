@@ -6,7 +6,7 @@ const User       = require('../models/user-model');
 const authRoutes = express.Router();
 
 /*
-    Define our routes
+    Define authentication routes
 
     We want to provide basic authentication features, and along with login and logout methods
     we want to expose a way for the client to know if the user is logged in.
