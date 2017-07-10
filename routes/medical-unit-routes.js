@@ -18,9 +18,9 @@ const medicalUnitRoutes = express.Router();
     METHOD      URL                 DESCRIPTION
     POST	    /medical-units  	Add new medical unit
     GET 	    /medical-units	    Returns all medical units
-    GET 	    /medical-units/:id  Returns country with id
-    PUT         /medical-units/:id  Edits country with id
-    DELETE      /medical-units/:id  Deletes country with id
+    GET 	    /medical-units/:id  Returns medical units with id
+    PUT         /medical-units/:id  Edits medical units with id
+    DELETE      /medical-units/:id  Deletes medical units with id
 */
 
 /*******************************************************************************************************************/
@@ -77,7 +77,106 @@ medicalUnitRoutes.post('/medical-units', (req, res, next) => {
   );
 });
 
+// 2. GET - Returns all medical units
+medicalUnitRoutes.get('/medical-units', (req, res, next) => {
+  // if user not login never will get this action
+  if (!req.isAuthenticated()) {
+    res.status(403).json({ message: 'Unauthorized' });
+    return;
+  }
 
+  MedicalUnit.find((err, unitList) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+    res.json(unitList);
+  });
+});
+
+// 3. GET - Returns medical units with id
+medicalUnitRoutes.get('/medical-units/:id', (req, res) => {
+  // if user not login never will get this action
+  if (!req.isAuthenticated()) {
+    res.status(403).json({ message: 'Unauthorized' });
+    return;
+  }
+
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // 400 Bad Request
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+  
+  MedicalUnit.findById(req.params.id, (err, theUnit) => {
+      if (err) {
+        res.json(err);
+        return;
+      }
+
+      res.json(theUnit);
+    });
+});
+
+// 4. PUT - Edits medical units with id
+medicalUnitRoutes.put('/medical-units/:id', (req, res) => {
+  // if user not login never will get this action
+  if (!req.isAuthenticated()) {
+    res.status(403).json({ message: 'Unauthorized' });
+    return;
+  }
+
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // 400 Bad Request
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+
+  const updatedMedicalUnit = {
+    countryCode: req.body.country,
+    name: req.body.name,
+    address: [req.body.street, req.body.city, req.body.state, req.body.zip]
+  };
+  
+  MedicalUnit.findByIdAndUpdate(req.params.id, updatedMedicalUnit, (err) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+
+    res.json({
+      message: `Medical Unit ${ updatedMedicalUnit.name } updated successfully`,
+      id: updatedMedicalUnit._id
+    });
+  });
+});
+
+// 5. DELETE - Deletes medical units with id
+medicalUnitRoutes.delete('/medical-units/:id', (req, res) => {
+  // if user not login never will get this action
+  if (!req.isAuthenticated()) {
+    res.status(403).json({ message: 'Unauthorized' });
+    return;
+  }
+
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    // 400 Bad Request
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+
+  MedicalUnit.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+
+    return res.json({
+      message: `Medical Unit deleted successfully`,
+      id: req.params.id
+    });
+  });
+});
 
 
 

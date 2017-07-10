@@ -161,11 +161,11 @@ countryRoutes.delete('/countries/:id', (req, res) => {
     return;
   }
 
-  if(mongoose.Types.ObjectId !== req.params.id) {
-    // 400 Bad Request
-    res.status(400).json({ message: 'Specified id does not exist' });
-    return;
-  }
+  // if(mongoose.Types.ObjectId !== req.params.id) {
+  //   // 400 Bad Request
+  //   res.status(400).json({ message: 'Specified id does not exist' });
+  //   return;
+  // }
   
   Country.remove({ _id: req.params.id }, (err) => {
     if (err) {
