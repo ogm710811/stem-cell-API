@@ -7,25 +7,28 @@ const patientSchema = new Schema({
         // medical unit where the patient is located
         // this value is a reference from medical-unit model
     },
-    photoAddress: { 
-        type : String 
+    pictureAddress: { 
+        type : String, default: ''
     }, 
     firstName: {
-        type : string,
+        type : String,
     },
     lastName: {
-        type : string,
+        type : String,
     },
     birthDate: {
-        type : date 
+        type : Date 
     },
     address: {
-        street: { type : string },
-        city:   { type : string },
-        state:  { type : string },
-        zip:    { type : string }
+        type : Array, default : [],
+        required : [ true, 'Please, enter a full address' ]
     },
+    // full address requirew street, city, state, and zip code
     email: {
+        type: String, required: true, unique: true
+    },
+    // full address requirew street, city, state, and zip code
+    phoneNumber: {
         type: String, required: true, unique: true
     },
     condition: {
@@ -67,20 +70,25 @@ const patientSchema = new Schema({
             LEY : Localized Eyes
         */
     },
-    followUp: [{
-        type:   { type : string },
-        result: { type : string },
-        date:   { type : date }
+    // FOLLOW UP will be implemnented in a
+    // separated tab ones the patient
+    // is treated.
+    followUp: {
+        type : Array, default : [],
+        required : true
+    },
     // every patient will have until 5 follow up
     /*
         type: phone call or questionnaire
         result: scale from 1 to 5
         date: date follow up was applied
     */
-    }]
 },
-{ 
-    timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
+{
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  }
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

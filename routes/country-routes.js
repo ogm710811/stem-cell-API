@@ -45,7 +45,7 @@ countryRoutes.post('/countries', (req, res, next) => {
             res.json(err);
             return;
         }
-        // if country was found does not create it
+        // if was found does not create it
         if (foundCountry) {
             res.status(400).json({ message: `Sorry, the country ${ foundCountry.name } already exist` });
             return;
@@ -161,12 +161,6 @@ countryRoutes.delete('/countries/:id', (req, res) => {
     return;
   }
 
-  // if(mongoose.Types.ObjectId !== req.params.id) {
-  //   // 400 Bad Request
-  //   res.status(400).json({ message: 'Specified id does not exist' });
-  //   return;
-  // }
-  
   Country.remove({ _id: req.params.id }, (err) => {
     if (err) {
       res.json(err);

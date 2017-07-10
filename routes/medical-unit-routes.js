@@ -8,8 +8,8 @@ const MedicalUnit  = require('../models/medical-unit-model');
 const medicalUnitRoutes = express.Router();
 
 /*
-    Define country routes
-    *** ONLY SUPER ADMIN ROLE CAN CREATE AND UPDATE COUNTRIES ***
+    Define medical units routes
+    *** ONLY SUPER ADMIN ROLE CAN CREATE AND UPDATE MEDICAL UNITS ***
 
     We want to provide basic authentication features, and along with login and logout methods
     we want to expose a way for the client to know if the user is logged in.
@@ -36,7 +36,7 @@ medicalUnitRoutes.post('/medical-units', (req, res, next) => {
   
   const countryCode  = req.body.country;
   const name         = req.body.name;
-  const address      = [req.body.street, req.body.city, req.body.state, req.body.zip]
+  const address      = [req.body.street, req.body.city, req.body.state, req.body.zip];
   
   
   MedicalUnit.findOne(
@@ -133,9 +133,9 @@ medicalUnitRoutes.put('/medical-units/:id', (req, res) => {
   }
 
   const updatedMedicalUnit = {
-    countryCode: req.body.country,
-    name: req.body.name,
-    address: [req.body.street, req.body.city, req.body.state, req.body.zip]
+    countryCode:  req.body.country,
+    name:         req.body.name,
+    address:      [req.body.street, req.body.city, req.body.state, req.body.zip]
   };
   
   MedicalUnit.findByIdAndUpdate(req.params.id, updatedMedicalUnit, (err) => {
