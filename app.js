@@ -7,6 +7,7 @@ const bodyParser   = require('body-parser');
 const layouts      = require('express-ejs-layouts');
 const mongoose     = require('mongoose');
 const ensure       = require('connect-ensure-login');
+const cors         = require('cors');
 
 
 const session      = require('express-session');
@@ -25,6 +26,9 @@ require('./config/passport-config');
 require('./config/database');
 
 const app = express();
+
+// enable CORS requests
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
