@@ -26,7 +26,7 @@ const patientRoutes = express.Router();
 /********************************************************************************************************************/
 // 1. POST - Add new patient
 patientRoutes.post('/patients', (req, res, next) => {
-  // if user not login never will get this action
+  //if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
     return;
@@ -96,10 +96,10 @@ patientRoutes.post('/patients', (req, res, next) => {
 // 2. GET - Returns all patients
 patientRoutes.get('/patients', (req, res, next) => {
   // if user not login never will get this action
-  if (!req.isAuthenticated()) {
-    res.status(403).json({ message: 'Unauthorized' });
-    return;
-  }
+  // if (!req.isAuthenticated()) {
+  //   res.status(403).json({ message: 'Unauthorized' });
+  //   return;
+  // }
 
   Patient.find((err, patientList) => {
     if (err) {
