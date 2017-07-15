@@ -113,10 +113,10 @@ patientRoutes.get('/patients', (req, res, next) => {
 // 3. GET - Returns patient with id
 patientRoutes.get('/patients/:id', (req, res) => {
   // if user not login never will get this action
-  if (!req.isAuthenticated()) {
-    res.status(403).json({ message: 'Unauthorized' });
-    return;
-  }
+  // if (!req.isAuthenticated()) {
+  //   res.status(403).json({ message: 'Unauthorized' });
+  //   return;
+  // }
 
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
     // 400 Bad Request

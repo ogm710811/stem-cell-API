@@ -56,7 +56,7 @@ const patientSchema = new Schema({
     deliveryMethod: {
         type: String, required: true,
         enum: ['IVN', 'IAR', 'IAC', 'ITC', 'ILS', 'LFT', 'LHD', 'LPN', 'LFC', 'LEY']
-        // patient condition :
+        // delivery method :
         /*
             IVN : Intravenous
             IAR : Intra Arterial
