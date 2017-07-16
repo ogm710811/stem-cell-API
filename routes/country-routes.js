@@ -27,7 +27,7 @@ const countryRoutes = express.Router();
 // ROUTES HERE ...
 /********************************************************************************************************************/
 // 1. POST - Add new country
-countryRoutes.post('/countries', (req, res, next) => {
+countryRoutes.post('/api.stem/countries', (req, res, next) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -75,7 +75,7 @@ countryRoutes.post('/countries', (req, res, next) => {
 });
 
 // 2. GET - Returns all countries
-countryRoutes.get('/countries', (req, res, next) => {
+countryRoutes.get('/api.stem/countries', (req, res, next) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -92,7 +92,7 @@ countryRoutes.get('/countries', (req, res, next) => {
 });
 
 // 3. GET - Returns country with id
-countryRoutes.get('/countries/:id', (req, res) => {
+countryRoutes.get('/api.stem/countries/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -116,7 +116,7 @@ countryRoutes.get('/countries/:id', (req, res) => {
 });
 
 // 4. PUT - Edits country with id
-countryRoutes.put('/countries/:id', (req, res) => {
+countryRoutes.put('/api.stem/countries/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -148,7 +148,7 @@ countryRoutes.put('/countries/:id', (req, res) => {
 });
 
 // 5. DELETE - Deletes country with id
-countryRoutes.delete('/countries/:id', (req, res) => {
+countryRoutes.delete('/api.stem/countries/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });

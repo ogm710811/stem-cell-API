@@ -27,9 +27,6 @@ require('./config/database');
 
 const app = express();
 
-// enable CORS requests
-app.use(cors());
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -61,24 +58,33 @@ app.use(passport.initialize());
 app.use(passport.session());
 // and before our routes
 
+//*********************************************************
+// enable CORS requests
+//*********************************************************
+app.use(cors({
+  credentials: true,
+  origin: [ 'http://localhost:4200' ]
+}));
+
 //**************************************************************
 // Routers here ...
 //**************************************************************
-const index = require('./routes/index');
-app.use('/', index);
+// const index = require('./routes/index');
+// app.use('/', index);
 
 const authRoutes = require('./routes/auth-routes');
-app.use('/api.stem', authRoutes);
+app.use('/', authRoutes);
 
 const countryRoutes = require('./routes/country-routes');
-app.use('/api.stem', countryRoutes);
+app.use('/', countryRoutes);
 
 const medicalUnitRoutes = require('./routes/medical-unit-routes');
-app.use('/api.stem', medicalUnitRoutes);
+app.use('/', medicalUnitRoutes);
 
 const patientRoutes = require('./routes/patient-routes.js');
-app.use('/api.stem', patientRoutes);
+app.use('/', patientRoutes);
 
+// display angular app if no route matches
 app.use((req, res, next) => {
   res.sendfile(__dirname + './public/index.html');
 });

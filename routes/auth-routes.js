@@ -1,7 +1,8 @@
-const express    = require('express');
-const passport   = require('passport');
-const bcrypt     = require('bcrypt');
-const User       = require('../models/user-model');
+const express           = require('express');
+const ensureLoggedIn    = require('../lib/ensure-login');
+const passport          = require('passport');
+const bcrypt            = require('bcrypt');
+const User              = require('../models/user-model');
 
 const authRoutes = express.Router();
 
@@ -40,7 +41,7 @@ const authRoutes = express.Router();
 // ROUTES HERE ...
 /********************************************************************************************************************/
 // 1. The Sign Up POST route checks for a user with the same username and if it does not exist it creates a new one.
-authRoutes.post('/signup', (req, res, next) => {
+authRoutes.post('/api.stem/signup', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
     const fullname = req.body.fullname;
@@ -48,7 +49,7 @@ authRoutes.post('/signup', (req, res, next) => {
     // don't let user submit blanck username and password
     // see that in this case we are responding with status(400).json()
     if (!username || !password || !fullname) {
-        res.status(400).json({ message: 'Provide username and password' });
+        res.status(400).json({ message: 'Please, provide your credentials' });
         return;
     }
 
@@ -105,7 +106,7 @@ authRoutes.post('/signup', (req, res, next) => {
 
 // 2. The Log In route uses the passport middleware to authenticate the user. 
 // If an error happens or the user is not found it returns an error.
-authRoutes.post('/login', (req, res, next) => {
+authRoutes.post('/api.stem/login', (req, res, next) => {
     passport.authenticate('local', (err, theUser, failureDetails) => {
         // if err, server responses with code 500 = Internal Server Error
         if (err) {
@@ -133,7 +134,7 @@ authRoutes.post('/login', (req, res, next) => {
 });
 
 // 3. The Log Out route just logs the user out and returns a success message.
-authRoutes.post('/logout', (req, res, next) => {
+authRoutes.post('/api.stem/logout', (req, res, next) => {
   req.logout();
   res.status(200).json({ message: 'Success Log Out' });
 });
@@ -141,18 +142,13 @@ authRoutes.post('/logout', (req, res, next) => {
 // 4. The Logged In route is from the client to know if the user is authenticated or not. 
 // The Passport function isAuthenticated comes into play here. If the result is true the 
 // API returns the user, otherwise an Unauthorized message:
-authRoutes.get('/loggedin', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.status(200).json(req.user);
-    return;
-  }
-  // code 403 = Forbidden
-  res.status(403).json({ message: 'Unauthorized' });
+authRoutes.get('/api.stem/loggedin', ensureLoggedIn, (req, res, next) => {
+  res.status(200).json(req.user);
 });
 
 // 5. The Private route looks a lot like the loggedin routes. 
 // The difference lies in the response content, in this case some protected and user-unrelated data:
-authRoutes.get('/private', (req, res, next) => {
+authRoutes.get('/api.stem/private', (req, res, next) => {
   if (req.isAuthenticated()) {
     res.json({ message: 'This is a private message' });
     return;

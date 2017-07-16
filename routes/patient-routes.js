@@ -21,11 +21,12 @@ const patientRoutes = express.Router();
     PUT         /patients/:id   Edits patient with id
     DELETE      /patients/:id   Deletes patient with id
 */
+
 /*******************************************************************************************************************/
 // ROUTES HERE ...
 /********************************************************************************************************************/
 // 1. POST - Add new patient
-patientRoutes.post('/patients', (req, res, next) => {
+patientRoutes.post('/api.stem/patients', (req, res, next) => {
   //if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -94,7 +95,7 @@ patientRoutes.post('/patients', (req, res, next) => {
 });
 
 // 2. GET - Returns all patients
-patientRoutes.get('/patients', (req, res, next) => {
+patientRoutes.get('/api.stem/patients', (req, res, next) => {
   // if user not login never will get this action
   // if (!req.isAuthenticated()) {
   //   res.status(403).json({ message: 'Unauthorized' });
@@ -111,7 +112,7 @@ patientRoutes.get('/patients', (req, res, next) => {
 });
 
 // 3. GET - Returns patient with id
-patientRoutes.get('/patients/:id', (req, res) => {
+patientRoutes.get('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   // if (!req.isAuthenticated()) {
   //   res.status(403).json({ message: 'Unauthorized' });
@@ -135,7 +136,7 @@ patientRoutes.get('/patients/:id', (req, res) => {
 });
 
 // 4. PUT - Edits patient with id
-patientRoutes.put('/patients/:id', (req, res) => {
+patientRoutes.put('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -176,7 +177,7 @@ patientRoutes.put('/patients/:id', (req, res) => {
 });
 
 // 5. DELETE - Deletes patient with id
-patientRoutes.delete('/patients/:id', (req, res) => {
+patientRoutes.delete('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });

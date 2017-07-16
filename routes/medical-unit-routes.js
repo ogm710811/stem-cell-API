@@ -27,7 +27,7 @@ const medicalUnitRoutes = express.Router();
 // ROUTES HERE ...
 /********************************************************************************************************************/
 // 1. POST - Add new medical unit
-medicalUnitRoutes.post('/medical-units', (req, res, next) => {
+medicalUnitRoutes.post('/api.stem/medical-units', (req, res, next) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -78,7 +78,7 @@ medicalUnitRoutes.post('/medical-units', (req, res, next) => {
 });
 
 // 2. GET - Returns all medical units
-medicalUnitRoutes.get('/medical-units', (req, res, next) => {
+medicalUnitRoutes.get('/api.stem/medical-units', (req, res, next) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -95,7 +95,7 @@ medicalUnitRoutes.get('/medical-units', (req, res, next) => {
 });
 
 // 3. GET - Returns medical units with id
-medicalUnitRoutes.get('/medical-units/:id', (req, res) => {
+medicalUnitRoutes.get('/api.stem/medical-units/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -119,7 +119,7 @@ medicalUnitRoutes.get('/medical-units/:id', (req, res) => {
 });
 
 // 4. PUT - Edits medical units with id
-medicalUnitRoutes.put('/medical-units/:id', (req, res) => {
+medicalUnitRoutes.put('/api.stem/medical-units/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
@@ -152,7 +152,7 @@ medicalUnitRoutes.put('/medical-units/:id', (req, res) => {
 });
 
 // 5. DELETE - Deletes medical units with id
-medicalUnitRoutes.delete('/medical-units/:id', (req, res) => {
+medicalUnitRoutes.delete('/api.stem/medical-units/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
     res.status(403).json({ message: 'Unauthorized' });
