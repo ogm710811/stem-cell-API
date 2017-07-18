@@ -69,8 +69,8 @@ app.use(cors({
 //**************************************************************
 // Routers here ...
 //**************************************************************
-// const index = require('./routes/index');
-// app.use('/', index);
+const index = require('./routes/index');
+app.use('/', index);
 
 const authRoutes = require('./routes/auth-routes');
 app.use('/', authRoutes);
@@ -85,9 +85,9 @@ const patientRoutes = require('./routes/patient-routes.js');
 app.use('/', patientRoutes);
 
 // display angular app if no route matches
-app.use((req, res, next) => {
-  res.sendfile(__dirname + './public/index.html');
-});
+// app.use((req, res, next) => {
+//   res.sendfile(__dirname + './public/index.html');
+// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

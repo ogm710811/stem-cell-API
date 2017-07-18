@@ -1,9 +1,10 @@
-const express    = require('express');
-const passport   = require('passport');
-const bcrypt     = require('bcrypt');
-const ensure     = require('connect-ensure-login');
-const mongoose   = require('mongoose');
-const Patient    = require('../models/patient-model');
+const express        = require('express');
+const passport       = require('passport');
+const bcrypt         = require('bcrypt');
+const ensure         = require('connect-ensure-login');
+const mongoose       = require('mongoose');
+const Patient        = require('../models/patient-model');
+const ensureLoggedIn = require('../lib/ensure-login');
 
 const patientRoutes = express.Router();
 
@@ -63,7 +64,7 @@ patientRoutes.post('/api.stem/patients', (req, res, next) => {
         }
 
         //*********************************************************
-        // no problem, then we are good to create new country
+        // no problem, then we are good to create new patient
         //********************************************************* 
         const thePatient = new Patient({
             pictureAddress: pictureAddress,
@@ -111,13 +112,30 @@ patientRoutes.get('/api.stem/patients', (req, res, next) => {
   });
 });
 
-// 3. GET - Returns patient with id
+// 3. GET - Search for a patient with given phoneNumber
+patientRoutes.get('/api.stem/patients/search',
+(req, res) => {  
+    // IMPORTANT!!  Notice that we find the patient by his phone
+    //              because the phone is unique value.
+    const phoneNumber = req.query.phoneNumber;
+
+    Patient.findOne(
+      { phoneNumber },
+
+      (err, thePatient) => {
+        if (err) {
+          res.json(err);
+          return;
+        }
+
+        res.json(thePatient);
+
+      }
+    );
+});
+
+// 4. GET - Returns patient with id
 patientRoutes.get('/api.stem/patients/:id', (req, res) => {
-  // if user not login never will get this action
-  // if (!req.isAuthenticated()) {
-  //   res.status(403).json({ message: 'Unauthorized' });
-  //   return;
-  // }
 
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
     // 400 Bad Request
@@ -135,7 +153,7 @@ patientRoutes.get('/api.stem/patients/:id', (req, res) => {
     });
 });
 
-// 4. PUT - Edits patient with id
+// 5. PUT - Edits patient with id
 patientRoutes.put('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
@@ -176,7 +194,7 @@ patientRoutes.put('/api.stem/patients/:id', (req, res) => {
   });
 });
 
-// 5. DELETE - Deletes patient with id
+// 6. DELETE - Deletes patient with id
 patientRoutes.delete('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
