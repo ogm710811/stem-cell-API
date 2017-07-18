@@ -128,6 +128,12 @@ patientRoutes.get('/api.stem/patients/search',
           return;
         }
 
+        // if was found does not create it
+        if (!thePatient) {
+            res.status(400).json({ message: `Sorry, the phone ${ phoneNumber } does not exist` });
+            return;
+        }
+
         res.json(thePatient);
 
       }
