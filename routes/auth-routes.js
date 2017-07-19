@@ -142,8 +142,14 @@ authRoutes.post('/api.stem/logout', (req, res, next) => {
 // 4. The Logged In route is from the client to know if the user is authenticated or not. 
 // The Passport function isAuthenticated comes into play here. If the result is true the 
 // API returns the user, otherwise an Unauthorized message:
-authRoutes.get('/api.stem/loggedin', ensureLoggedIn, (req, res, next) => {
-  res.status(200).json(req.user);
+authRoutes.get('/api.stem/loggedin', (req, res, next) => {
+    if (req.isAuthenticated()) {
+        console.log("i get in here ---------");
+        res.status(200).json(req.user);
+        return;
+    }
+
+    res.status(401).json({ message: "Unauthorized." });
 });
 
 // 5. The Private route looks a lot like the loggedin routes. 

@@ -12,7 +12,14 @@ const countrySchema = new Schema({
         type : String,
         required  : [ true, 'Please, enter a country code' ]
         // the name of the country
-    },    
+    },
+    units: [
+        {
+            // a reference to medical unit model
+            type: Schema.Types.ObjectId,
+            ref: 'Unit' 
+        }
+    ]    
 },
 {
   timestamps: {

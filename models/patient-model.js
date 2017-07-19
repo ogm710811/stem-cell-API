@@ -2,11 +2,6 @@ const mongoose     = require('mongoose');
 const Schema       = mongoose.Schema;
 
 const patientSchema = new Schema({
-    unit_id: {
-        type : Schema.Types.ObjectId,
-        // medical unit where the patient is located
-        // this value is a reference from medical-unit model
-    },
     pictureAddress: { 
         type : String, default: ''
     }, 
@@ -32,7 +27,7 @@ const patientSchema = new Schema({
         type: String, required: true, unique: true
     },
     condition: {
-        type: String, required: true,
+        type: String,
         enum: ['COPD', 'ED', 'OC', 'EY', 'AI', 'DT2', 'SCI', 'TBI']
         // patient condition :
         /*
@@ -47,14 +42,14 @@ const patientSchema = new Schema({
         */
     },
     procedure: {
-        type: String, required: true,
+        type: String, 
         enum: ['Adipose Derived Stem Cell', 'Bone Marrow']
         // type of procedures to apply to a patient. The procedure to apply is
         // related with the patient condition. Could be both. Those procedures
         // are the sources of stem cells.
     },
     deliveryMethod: {
-        type: String, required: true,
+        type: String,
         enum: ['IVN', 'IAR', 'IAC', 'ITC', 'ILS', 'LFT', 'LHD', 'LPN', 'LFC', 'LEY']
         // delivery method :
         /*

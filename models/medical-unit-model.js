@@ -20,8 +20,15 @@ const medicalUnitSchema = new Schema({
     address: {
         type : Array, default : [],
         required : [ true, 'Please, enter a full address' ]
-    }
-    // full address requirew street, city, state, and zip code
+        // full address requirew street, city, state, and zip code
+    },
+    patients: [
+        {
+            // a reference to patient model
+            type: Schema.Types.ObjectId,
+            ref: 'Patient' 
+        }
+    ]
 },
 {
   timestamps: {

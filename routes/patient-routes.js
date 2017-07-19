@@ -29,10 +29,10 @@ const patientRoutes = express.Router();
 // 1. POST - Add new patient
 patientRoutes.post('/api.stem/patients', (req, res, next) => {
   //if user not login never will get this action
-  if (!req.isAuthenticated()) {
-    res.status(403).json({ message: 'Unauthorized' });
-    return;
-  }
+  // if (!req.isAuthenticated()) {
+  //   res.status(403).json({ message: 'Unauthorized' });
+  //   return;
+  // }
 
   const pictureAddress  = req.body.pictureAddress;
   const firstName       = req.body.firstName;
