@@ -144,6 +144,22 @@ patientRoutes.get('/api.stem/procedures', ensureLoggedIn, (req, res) => {
     });
 });
 
+// GET - Returns all patient delivery method applied in a medical unit
+// Use at REPORTS - DELIVERY METHOD REPORT
+patientRoutes.get('/api.stem/methods', ensureLoggedIn, (req, res) => {
+  Patient.find(
+    {}, { deliveryMethod : 1 })
+    .sort({ deliveryMethod : 1})
+    .exec((err, allMethods) => {
+      if (err) {
+        res.status(500).json({ message: 'Delivery Methods can not be retrieved at this moment' });
+        return;
+      }
+
+      res.json(allMethods);
+    });
+});
+
 // GET - Search for a patient with given phoneNumber
 patientRoutes.get('/api.stem/patients/search',
 (req, res) => {  
