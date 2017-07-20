@@ -176,13 +176,40 @@ patientRoutes.get('/api.stem/patients/search',
           return;
         }
 
-        // if was found does not create it
+        // if wasn't found send a message to display
         if (!thePatient) {
             res.status(400).json({ message: `Sorry, the phone ${ phoneNumber } does not exist` });
             return;
         }
 
         res.json(thePatient);
+
+      }
+    );
+});
+
+// GET - Search for patients with given condition
+patientRoutes.get('/api.stem/patients/search/condition',
+(req, res) => {  
+    // get the patient condition from the query params
+    const condition = req.query.condition;
+
+    Patient.find(
+      { condition : condition },
+
+      (err, patientList) => {
+        if (err) {
+          res.json(err);
+          return;
+        }
+
+        // if wasn't found send a message to display
+        if (!patientList) {
+            res.status(400).json({ message: `Sorry, there was an error, try again later` });
+            return;
+        }
+
+        res.json(patientList);
 
       }
     );
