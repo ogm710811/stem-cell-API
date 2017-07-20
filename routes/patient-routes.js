@@ -26,7 +26,7 @@ const patientRoutes = express.Router();
 /*******************************************************************************************************************/
 // ROUTES HERE ...
 /********************************************************************************************************************/
-// 1. POST - Add new patient
+// POST - Add new patient
 patientRoutes.post('/api.stem/patients', (req, res, next) => {
   //if user not login never will get this action
   // if (!req.isAuthenticated()) {
@@ -95,7 +95,7 @@ patientRoutes.post('/api.stem/patients', (req, res, next) => {
   );
 });
 
-// 2. GET - Returns all patients
+// GET - Returns all patients
 patientRoutes.get('/api.stem/patients', (req, res, next) => {
   // if user not login never will get this action
   // if (!req.isAuthenticated()) {
@@ -112,7 +112,7 @@ patientRoutes.get('/api.stem/patients', (req, res, next) => {
   });
 });
 
-// 3. GET - Returns all patient conditions in a medical unit
+// GET - Returns all patient conditions in a medical unit
 // Use at REPORTS - PATIENT CONDITION REPORT
 patientRoutes.get('/api.stem/conditions', ensureLoggedIn, (req, res) => {
   Patient.find(
@@ -120,7 +120,7 @@ patientRoutes.get('/api.stem/conditions', ensureLoggedIn, (req, res) => {
     .sort({ condition : 1})
     .exec((err, allConditions) => {
       if (err) {
-        res.status(500).json({ message: 'Conditions can not be retrieve at this moment' });
+        res.status(500).json({ message: 'Conditions can not be retrieved at this moment' });
         return;
       }
 
@@ -128,7 +128,23 @@ patientRoutes.get('/api.stem/conditions', ensureLoggedIn, (req, res) => {
     });
 });
 
-// 4. GET - Search for a patient with given phoneNumber
+// GET - Returns all patient procedure in a medical unit
+// Use at REPORTS - PROCEDURES REPORT
+patientRoutes.get('/api.stem/procedures', ensureLoggedIn, (req, res) => {
+  Patient.find(
+    {}, { procedure : 1 })
+    .sort({ procedure : 1})
+    .exec((err, allProcedures) => {
+      if (err) {
+        res.status(500).json({ message: 'Procedures can not be retrieved at this moment' });
+        return;
+      }
+
+      res.json(allProcedures);
+    });
+});
+
+// GET - Search for a patient with given phoneNumber
 patientRoutes.get('/api.stem/patients/search',
 (req, res) => {  
     // IMPORTANT!!  Notice that we find the patient by his phone
@@ -156,7 +172,7 @@ patientRoutes.get('/api.stem/patients/search',
     );
 });
 
-// 5. GET - Returns patient with id
+// GET - Returns patient with id
 patientRoutes.get('/api.stem/patients/:id', (req, res) => {
 
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -175,7 +191,7 @@ patientRoutes.get('/api.stem/patients/:id', (req, res) => {
     });
 });
 
-// 6. PUT - Edits patient with id
+// PUT - Edits patient with id
 patientRoutes.put('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
@@ -216,7 +232,7 @@ patientRoutes.put('/api.stem/patients/:id', (req, res) => {
   });
 });
 
-// 7. DELETE - Deletes patient with id
+// DELETE - Deletes patient with id
 patientRoutes.delete('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
