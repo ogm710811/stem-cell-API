@@ -112,7 +112,23 @@ patientRoutes.get('/api.stem/patients', (req, res, next) => {
   });
 });
 
-// 3. GET - Search for a patient with given phoneNumber
+// 3. GET - Returns all patient conditions in a medical unit
+// Use at REPORTS - PATIENT CONDITION REPORT
+patientRoutes.get('/api.stem/conditions', ensureLoggedIn, (req, res) => {
+  Patient.find(
+    {}, { condition : 1 })
+    .sort({ condition : 1})
+    .exec((err, allConditions) => {
+      if (err) {
+        res.status(500).json({ message: 'Conditions can not be retrieve at this moment' });
+        return;
+      }
+
+      res.json(allConditions);
+    });
+});
+
+// 4. GET - Search for a patient with given phoneNumber
 patientRoutes.get('/api.stem/patients/search',
 (req, res) => {  
     // IMPORTANT!!  Notice that we find the patient by his phone
@@ -140,7 +156,7 @@ patientRoutes.get('/api.stem/patients/search',
     );
 });
 
-// 4. GET - Returns patient with id
+// 5. GET - Returns patient with id
 patientRoutes.get('/api.stem/patients/:id', (req, res) => {
 
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -159,7 +175,7 @@ patientRoutes.get('/api.stem/patients/:id', (req, res) => {
     });
 });
 
-// 5. PUT - Edits patient with id
+// 6. PUT - Edits patient with id
 patientRoutes.put('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
@@ -200,7 +216,7 @@ patientRoutes.put('/api.stem/patients/:id', (req, res) => {
   });
 });
 
-// 6. DELETE - Deletes patient with id
+// 7. DELETE - Deletes patient with id
 patientRoutes.delete('/api.stem/patients/:id', (req, res) => {
   // if user not login never will get this action
   if (!req.isAuthenticated()) {
