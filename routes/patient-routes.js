@@ -242,6 +242,33 @@ patientRoutes.get('/api.stem/patients/search/procedure',
     );
 });
 
+// GET - Search for patients with given method
+patientRoutes.get('/api.stem/patients/search/method',
+(req, res) => {  
+    // get the patient procedure from the query params
+    const method = req.query.method;
+
+    Patient.find(
+      { deliveryMethod : method },
+
+      (err, patientList) => {
+        if (err) {
+          res.json(err);
+          return;
+        }
+
+        // if wasn't found send a message to display
+        if (!patientList) {
+            res.status(400).json({ message: `Sorry, there was an error, try again later` });
+            return;
+        }
+
+        res.json(patientList);
+
+      }
+    );
+});
+
 // GET - Returns patient with id
 patientRoutes.get('/api.stem/patients/:id', (req, res) => {
 
